@@ -49,4 +49,4 @@ const LoginSignup = () => {
                   <Components.Title>Welcome Back!</Components.Title>
                   <Components.Paragraph>
                       To keep connected with us please login with your personal info
-                  </P>
+                  </Components.Paragraph>

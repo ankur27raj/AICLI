@@ -11,7 +11,7 @@ import { ShopContext } from '../../Context/ShopContext';
 const Navbar = () => {
     const [icon, setIcon] = useState(cart_icon);
     const [menu, setMenu] = useState("shop");
-    const { getTotalCartItems, theme, setTheme } = useContext(ShopContext);
+    const { getTotalCartItems, theme, setTheme, user, logout } = useContext(ShopContext);
 
     const toggle = () => {
         if (theme === "dark") {
@@ -54,7 +54,15 @@ const Navbar = () => {
                 </li>
             </ul>
             <div className="nav-login-cart">
-                <Link to='/login'><button className='log_btn'>Login</button></Link>
+                {user ? (
+                    <>
+                        <img src={user.picture} alt="user" style={{ width: '30px', height: '30px', borderRadius: '50%' }} />
+                        <span>{user.name}</span>
+                        <button className='log_btn' onClick={logout}>Logout</button>
+                    </>
+                ) : (
+                    <Link to='/login'><button className='log_btn'>Login</button></Link>
+                )}
                 <Link to='/cart'><img src={icon} alt="" className='cart' /></Link>
                 <div className="nav-cart-count">{getTotalCartItems()}</div>
                 <div className='dark_btn'>

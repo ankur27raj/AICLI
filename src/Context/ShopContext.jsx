@@ -6,6 +6,16 @@ export const ShopContext = createContext(null);
 const ShopContextProvider = (props) => {
   const [cartItems, setcartItems] = useState([]);
   const [theme,setTheme]=useState("dark");
+  const [user, setUser] = useState(null);
+
+  const login = (userData) => {
+    setUser(userData);
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
+
   const addToCart = (itemId, size, quantity) => {
     const existingCartItemIndex = cartItems.findIndex(item => item.id === itemId && item.size === size);
   
@@ -46,11 +56,14 @@ const ShopContextProvider = (props) => {
     all_product,
     cartItems,
     theme,
+    user,
     addToCart,
     removeFromCart,
     getTotalCartAmount,
     getTotalCartItems,
     setTheme,
+    login,
+    logout,
   };
   return (
     <ShopContext.Provider value={contextValue}>

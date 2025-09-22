@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react';
 import * as Components from './Components';
-
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
+import { ShopContext } from '../Context/ShopContext';
 
 const LoginSignup = () => {
   const [signIn, toggle] = React.useState(true);
+  const { login } = useContext(ShopContext);
+
+  const handleGoogleLogin = (credentialResponse) => {
+    const decoded = jwtDecode(credentialResponse.credential);
+    login(decoded);
+  };
+
   return(
     <Components.div>
         <Components.Container>
@@ -24,6 +33,12 @@ const LoginSignup = () => {
                    <Components.Input type='password' placeholder='Password' />
                    <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
                    <Components.Button>Sigin In</Components.Button>
+                   <GoogleLogin
+                    onSuccess={handleGoogleLogin}
+                    onError={() => {
+                      console.log('Login Failed');
+                    }}
+                  />
                </Components.Form>
           </Components.SignInContainer>
 
@@ -34,29 +49,4 @@ const LoginSignup = () => {
                   <Components.Title>Welcome Back!</Components.Title>
                   <Components.Paragraph>
                       To keep connected with us please login with your personal info
-                  </Components.Paragraph>
-                  <Components.GhostButton onClick={() => toggle(true)}>
-                      Sign In
-                  </Components.GhostButton>
-                  </Components.LeftOverlayPanel>
-
-                  <Components.RightOverlayPanel signinIn={signIn}>
-                    <Components.Title>Hello, Friend!</Components.Title>
-                    <Components.Paragraph>
-                        Enter Your personal details and start journey with us
-                    </Components.Paragraph>
-                        <Components.GhostButton onClick={() => toggle(false)}>
-                            Sigin Up
-                        </Components.GhostButton> 
-                  </Components.RightOverlayPanel>
-
-              </Components.Overlay>
-          </Components.OverlayContainer>
-
-      </Components.Container>
-    </Components.div>
-      
-  )
-}
-
-export default LoginSignup
+                  </P>

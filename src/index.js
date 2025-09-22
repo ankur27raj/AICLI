@@ -4,15 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ShopContextProvider from './Context/ShopContext';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/* By this we can provide data to all the pages of App */}
-    <ShopContextProvider>    
-    <App />
-    </ShopContextProvider>
-    
+    <GoogleOAuthProvider clientId="<YOUR_GOOGLE_CLIENT_ID>">
+      <ShopContextProvider>    
+        <App />
+      </ShopContextProvider>
+    </GoogleOAuthProvider>
   </React.StrictMode>
 );
 
